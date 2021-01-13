@@ -1,140 +1,8 @@
-/*
-  Blink
-  Continuously turns on an LED for one second and then off for one second.
-  This example is to be used with the chipKIT Uno32, Max32, Cerebot MX3ck, Cerebot MX4ck, and Cerebot MX7ck.
-  This example code is in the public domain.
-*/
-
 #include <SPI.h>
 #include <SD.h>
 #include "TouchScreen.h"
 #include <DisplayCore.h>
 #include <DSPI.h>
-
-// Declare Variables
-byte RXByte;
-int  cnt  = 0;
-int  cnt2  = 0;
-byte testbyte = 0;
-int  checkcnt = 0;
-
-void setup()
-{
-  // Open serial communications and wait for port to open:
-  Serial.begin(230400);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
-  /*
-    Serial.println("Welcome to Bonneville Power Administration.");
-    Serial.println("This window will display data incoming through a fiber C37.94 interface to the FPGA.");
-    Serial.println(" ");
-    //Serial.println("        Header                                     Operation Codes                                                                                                             FRAME DATA  ");
-    //Serial.println("=======================   =============================================================== ==================================================================================================================================================================================");
-  */
-  // Displaying the BPA Logo
-
-  Serial.println(":######+               +#######.             '###    '#+            ####    +#;            ######.            ###+    ;#;           '###            +###               `###                ######`    ");
-  Serial.println(".### ###,            ###.    `###             #####`  #:            .#####  :#.            ###.                ###+  `#;            ;###            '##+                ###                ###,       ");
-  Serial.println(".######,             ###`     ###:            #+####  #:            .#;#### :#.            #####+              ,###  '#`            ;###            '##+                ###                #####+     ");
-  Serial.println(".#######,           `###`     ###;            #+.###+ #:            .#:;###':#.            #####+               ###  ##             ;###            '##+                ###                #####+     ");
-  Serial.println(".###  ###            ###.     ###:            #+ '###,#:            `#: +###;#.            ###. ,               +##+`#'             ;###            '##+                ###                ###, ,     ");
-  Serial.println(":#######`              ########              .##    '##:            ;#+    +##.            #######,               ###`              '###            '######:           `#######            #######,   ");
-
-  /*
-    Serial.println(" ");
-    Serial.println(" ");
-    Serial.println(" ");
-    Serial.println("    +###:     ####+     ## ;#  #:    ###`    ####.           ##:      ####'     ,#+  ##     ##    ,#'  #`    ##    '###    '####    +###;      :##      ####;    #'     #####     +#` `#          ");
-    Serial.println("    +# ##    ##  '#:    ## :#; #     #'      ## ##           ###      ## ;#,    :## ;##     ##     ##, #     ##    ##        ##     +# ##      +##     ` ## `    #:    ##  ,#+    '## `+          ");
-    Serial.println("    +# ##   .#'  `#+    ,#.+## #     #+'     ##`#;          ,++#      ##  ##    '+#.###     ##     ### #     ##    ###:      #+     +# #'      #,#:      ##      #:    #+   ##    '###`+          ");
-    Serial.println("    +#''    .#'   ##    `#;#'#.'     #+'     ####           +;'#;     ##  ##    #.###'#     ##     +,###     ##     +##:     ##     +###      ,+:##      ##      #:    ##   ##    '.##;+          ");
-    Serial.println("    +#       ##  `#;     ##+`##`     #'      ##'#.          #::##     ## .#'    #`+##:#.    ##     + +##     ##       ##     ##     +#;#:     #;:+#      ##      #:    ##   ##    '. ##+          ");
-    Serial.println("    +#       ;##,##      ;#, ##      ##:+    ## ##         .+  +#     ##'##     # ,#..#:    ##     +  ##     ##    #:'#;     #+     +# ##     #  ,#'     +#      #;    `##.##`    '. .#+          ");
-  */
-
-  Serial.println(" ");
-  Serial.println(" ");
-  Serial.println(" ");
-
-  cnt  = 0;
-  cnt2 = 0;
-}
-
-unsigned int c; // c accumulates the total bits set in v
-unsigned int v; // count the number of bits set in v
-
-void loop()
-{
-
-
-  if (Serial.available())
-  {
-    testbyte = Serial.read();
-
-
-    cnt = cnt + 1;
-
-
-    if (cnt >= 32)
-    {
-      cnt2 = cnt2 + 1;
-      Serial.println();
-      Serial.println();
-      Serial.print("Frame #");
-      Serial.print(cnt2, DEC);
-      Serial.print(":");
-      cnt = 0;
-    }
-
-    // Determine number of 0s to pad with
-    if (testbyte == 0)
-    {
-      Serial.print("0000000");
-    }
-
-    else if (testbyte < 2)
-    {
-      Serial.print("0000000");
-    }
-
-    else if (testbyte < 4)
-    {
-      Serial.print("000000");
-    }
-
-    else if (testbyte < 8)
-    {
-      Serial.print("00000");
-    }
-
-    else if (testbyte < 16)
-    {
-      Serial.print("0000");
-    }
-
-    else if (testbyte < 32)
-    {
-      Serial.print("000");
-    }
-
-    else if (testbyte < 64)
-    {
-      Serial.print("00");
-    }
-
-    else if (testbyte < 128)
-    {
-      Serial.print("0");
-    }
-
-    Serial.print(testbyte, BIN);
-
-
-    testbyte = 0;
-  }
-}
-
 #include <Adafruit_GFX.h>    // Core graphics library
 //#include "Adafruit_GFX.h"
 #include "Adafruit_HX8357.h"
@@ -142,6 +10,13 @@ void loop()
 #include <SPI.h>
 #include <SD.h>
 #include "TouchScreen.h"
+
+// Declare Variables
+byte RXByte;
+int  cnt  = 0;
+int  cnt2  = 0;
+byte testbyte = 0;
+int  checkcnt = 0;
 
 // These are the four touchscreen analog pins
 #define YP A4  // must be an analog pin, use "An" notation!
